@@ -3,11 +3,17 @@ require 'oystercard'
 describe Oystercard do
   subject(:card) { described_class.new }
   let(:station)  {   double(:station)  }
+  let(:exit_station) {double(:station, :exit_station => :nil) }
+  let(:journey){ {entry_station: station, exit_station: exit_station} }
 
   describe '#initialization' do
     it 'has a default balance of 0' do
       expect(subject.balance).to eq 0
     end
+    
+    it 'tests that the journeys array is empty by default' do
+      expect(card.journeys).to be_empty
+      end
   end
 
   describe '#top_up' do
@@ -54,7 +60,7 @@ describe Oystercard do
     it 'is exected to remember the entry station' do
       card.top_up(10)
       card.touch_in(station)
-      expect(card.entry_station).to eq station
+      expect(card.entry_station).to be station
    end
 
     it 'should raise an error if you don\'t have balance for travel' do
@@ -64,14 +70,21 @@ describe Oystercard do
 
   describe '#touch_out' do
     it 'expects touch_out to change the status of in_journey to false' do
-    card.touch_out
+    card.touch_out(exit_station)
     expect(card.in_journey?).to eq false
+    end
+    
+    it 'checks that touching in and out creates one journey' do
+      card.top_up(10)
+      card.touch_in(station)
+      card.touch_out(exit_station)
+      expect(card.journeys).to include journey
     end
 
     it 'should forget entry station on touch out' do
       card.top_up(10)
       card.touch_in(station)
-      card.touch_out
+      card.touch_out(exit_station)
       expect(card.entry_station).to eq nil
     end
   end
@@ -79,6 +92,6 @@ describe Oystercard do
     it 'should deduct the cost of the journey from the user\'s card' do
       card.top_up(40)
       card.touch_in(station)
-      expect {card.touch_out}.to change{card.balance}.by(-described_class::TRAVEL_COST)
+      expect {card.touch_out(exit_station)}.to change{card.balance}.by(-described_class::TRAVEL_COST)
     end
 end
