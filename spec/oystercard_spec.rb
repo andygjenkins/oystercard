@@ -19,7 +19,7 @@ describe Oystercard do
   describe '#deduct' do
   it 'allows a fare to be deducted from their oystercard' do
     card.top_up(40)
-    card.deduct(10)
+    card.send(:deduct, (10))
     expect(card.balance).to eq 30
   end
 
@@ -54,6 +54,11 @@ describe Oystercard do
     card.touch_out
     expect(card.in_journey?).to eq false
     end
-  end
-
+    
+    it 'should deduct the cost of the journey from the user\'s card' do
+      card.top_up(40)
+      card.touch_in
+      expect {card.touch_out}.to change{card.balance}.by(-described_class::TRAVEL_COST)
+    end
+    end
 end
