@@ -62,7 +62,16 @@ describe Oystercard do
 
     it 'should deduct the cost of the journey from the user\'s card' do
       card.touch_in(station)
-      expect {card.touch_out(exit_station)}.to change{card.balance}.by(-described_class::TRAVEL_COST)
+      expect {card.touch_out(station)}.to change{card.balance}.by(-described_class::TRAVEL_COST)
+    end
+    
+    it 'should deduct a penalty fare if the user doesn\'t complete a journey - touch in' do
+      card.touch_in(station)
+      expect {card.touch_in(station)}.to change{card.balance}.by(-described_class::PENALTY_FARE)
+    end
+    
+    it 'should deduct a penatly fare if the user doesn\'t complete a journey - touch out' do
+      expect {card.touch_out(station)}.to change{card.balance}.by(-described_class::PENALTY_FARE)
     end
   end
 end
