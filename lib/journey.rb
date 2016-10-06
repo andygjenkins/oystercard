@@ -24,16 +24,15 @@ class Journey
     @entry_station != nil ? true : false
   end
   
-  #def journey_incomplete
-   #   if @entry_station == nil && @exit_station == exit_station
-  #end
+  def journey_incomplete?
+    @entry_station == nil || @exit_station == nil
+  end
 
   def reset
     @entry_station = nil && @exit_station = nil
   end
 
-  def complete_journey(station)
-    finish(station)
+  def complete_journey
     create_journey
     reset
   end

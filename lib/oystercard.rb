@@ -20,17 +20,22 @@ class Oystercard
 
   def touch_in(station)
     fail 'Insufficient funds, please top up' if TRAVEL_COST > @balance
-    journey.start(station)
+    journey.in_journey? ? deduct(fare) : journey.start(station)
   end
 
   def touch_out(station)
-    deduct(TRAVEL_COST)
-    journey.complete_journey(station)
+    journey.finish(station)
+    deduct(fare)
+    journey.complete_journey
   end
 
   private
 
   def deduct(amount)
     @balance -= amount
+  end
+  
+  def fare
+   journey.journey_incomplete? ? PENALTY_FARE : TRAVEL_COST
   end
 end
