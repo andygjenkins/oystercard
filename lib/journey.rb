@@ -1,27 +1,26 @@
 class Journey
 
-  attr_reader :entry_station, :exit_station
+  attr_reader :entry_station, :exit_station, :journeys
 
  def initialize(entry_station = nil, exit_station = nil)
    @entry_station = entry_station
    @exit_station = exit_station
+   @journeys = []
  end
-
-end
-=begin
-  def create_journey
+ 
+ def create_journey
     last_journey = Hash.new
     last_journey[:entry_station] = @entry_station
     last_journey[:exit_station] = @exit_station
     @journeys << last_journey
-    end
+ end
+    
+ def in_journey?                                         #####
+    if @entry_station == nil then false else true end
+ end
 
-    def deduct(amount)
-      @balance -= amount
-    end
-
-    def reset
+ def reset
       @entry_station = nil
       @exit_station = nil
-    end
-=end
+  end
+end

@@ -6,9 +6,10 @@ class Oystercard
 
   def initialize(balance = 0)
     @balance = balance
-    @entry_station = nil
-    @exit_station = nil
-    @journeys = []
+    @entry_station = nil      ####
+    @exit_station = nil       ####
+    @journeys = []            ####
+    
   end
 
   def top_up(amount)
@@ -16,7 +17,7 @@ class Oystercard
     @balance += amount
   end
 
-  def in_journey?
+  def in_journey?                                         #####
     if @entry_station == nil then false else true end
   end
 
@@ -38,14 +39,14 @@ class Oystercard
     @balance -= amount
   end
   
-  def create_journey
+  def create_journey                    ####
     last_journey = Hash.new
     last_journey[:entry_station] = @entry_station
     last_journey[:exit_station] = @exit_station
     @journeys << last_journey
     end
     
-  def reset
+  def reset                   ####
     @entry_station = nil
     @exit_station = nil
   end
