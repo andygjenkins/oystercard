@@ -9,10 +9,7 @@ class Journey
   end
 
   def create_journey
-    last_journey = Hash.new
-    last_journey[:entry_station] = @entry_station
-    last_journey[:exit_station] = @exit_station
-    @journeys << last_journey
+    @journeys << { entry_station: @entry_station, exit_station: @exit_station }
   end
 
   def start(station)
@@ -24,11 +21,16 @@ class Journey
   end
 
   def in_journey?                                         #####
-    if @entry_station == nil then false else true end
+    @entry_station != nil ? true : false
   end
 
   def reset
-    @entry_station = nil
-    @exit_station = nil
+    @entry_station = nil && @exit_station = nil
+  end
+
+  def complete_journey(station)
+    finish(station)
+    create_journey
+    reset
   end
 end

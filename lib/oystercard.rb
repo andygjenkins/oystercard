@@ -24,9 +24,7 @@ class Oystercard
 
   def touch_out(station)
     deduct(TRAVEL_COST)
-    journey.finish(station)
-    journey.create_journey
-    journey.reset
+    journey.complete_journey(station)
   end
 
   private
