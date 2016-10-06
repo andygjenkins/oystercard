@@ -10,7 +10,14 @@ describe JourneyLog do
   it 'checks that touching in and out creates one journey' do
     card.touch_in(station)
     card.touch_out(exit_station)
-    expect(card.journey.journey_log.journeys).to include journey
+    expect(card.journey_log.journeys).to include journey
   end
-
+  
+  describe '#start' do
+    
+    it 'starts a journey' do
+      card.touch_in(station)
+      expect(card.journey_log.entry_station).to eq station
+    end
+  end
 end

@@ -18,9 +18,6 @@ describe Journey do
       expect(card.journey.exit_station).to eq nil
     end
     
-     it 'tests that the journeys array is empty by default' do
-      expect(card.journey.journeys).to be_empty
-    end
   end
 
 
@@ -34,11 +31,5 @@ describe Journey do
       card.touch_in(station)
       expect(card.journey.in_journey?).to be true
     end
-  end
-
-  it 'checks that touching in and out creates one journey' do
-    card.touch_in(station)
-    card.touch_out(exit_station)
-    expect(card.journey.journeys).to include journey
   end
 end
