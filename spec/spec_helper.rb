@@ -1,6 +1,7 @@
 require 'oystercard'
 require 'station'
 require 'journey'
+require 'journey_log'
 
 RSpec.configure do |config|
   # Use color in STDOUT
