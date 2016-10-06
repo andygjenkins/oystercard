@@ -11,8 +11,12 @@ describe Journey do
   describe '#initizalization' do
     
     it 'should return nil if no arguments are passed to it' do
-      expect(subject.entry_station).to eq nil
-      expect(subject.exit_station).to eq nil
+      expect(card.journey.entry_station).to eq nil
+      expect(card.journey.exit_station).to eq nil
+    end
+    
+     it 'tests that the journeys array is empty by default' do
+      expect(card.journey.journeys).to be_empty
     end
   end
 
@@ -20,13 +24,13 @@ describe Journey do
   describe '#in_journey?' do
 
     it 'expects in_journey to equal false be default' do
-      expect(card.in_journey?).to be false
+      expect(card.journey.in_journey?).to be false
     end
 
     it 'is expected to check status based on entry station' do
       card.top_up(10)
       card.touch_in(station)
-      expect(card.in_journey?).to be true
+      expect(card.journey.in_journey?).to be true
     end
   end
 
@@ -34,6 +38,6 @@ describe Journey do
     card.top_up(10)
     card.touch_in(station)
     card.touch_out(exit_station)
-    expect(card.journeys).to include journey
+    expect(card.journey.journeys).to include journey
   end
 end

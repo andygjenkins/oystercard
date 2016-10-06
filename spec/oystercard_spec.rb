@@ -13,10 +13,6 @@ describe Oystercard do
     it 'has a default balance of 0' do
       expect(subject.balance).to eq 0
     end
-
-    it 'tests that the journeys array is empty by default' do
-      expect(card.journeys).to be_empty
-    end
   end
 
 
@@ -34,34 +30,20 @@ describe Oystercard do
     message = "Card limit of £#{maximum_balance} has been reached."
     expect{ card.top_up(1) }.to raise_error message
   end
-
-
-  describe '#in_journey?' do
-
-    it 'expects in_journey to equal false be default' do
-      expect(card.in_journey?).to be false
-    end
-
-    it 'is expected to check status based on entry station' do
-      card.top_up(10)
-      card.touch_in(station)
-      expect(card.in_journey?).to be true
-    end
-  end
-
+  
 
   describe '#touch_in' do
 
     it 'expects touch_in to change the status of in_journey to true' do
       card.top_up(10)
       card.touch_in(station)
-      expect(card.in_journey?).to eq true
+      expect(card.journey.in_journey?).to eq true
     end
 
     it 'is exected to remember the entry station' do
       card.top_up(10)
       card.touch_in(station)
-      expect(card.entry_station).to be station
+      expect(card.journey.entry_station).to be station
     end
 
     it 'should raise an error if you don\'t have balance for travel' do
@@ -74,21 +56,14 @@ describe Oystercard do
     
     it 'expects touch_out to change the status of in_journey to false' do
       card.touch_out(exit_station)
-      expect(card.in_journey?).to eq false
-    end
-
-    it 'checks that touching in and out creates one journey' do
-      card.top_up(10)
-      card.touch_in(station)
-      card.touch_out(exit_station)
-      expect(card.journeys).to include journey
+      expect(card.journey.in_journey?).to eq false
     end
 
     it 'should forget entry station on touch out' do
       card.top_up(10)
       card.touch_in(station)
       card.touch_out(exit_station)
-      expect(card.entry_station).to eq nil
+      expect(card.journey.entry_station).to eq nil
     end
 
     it 'should deduct the cost of the journey from the user\'s card' do
