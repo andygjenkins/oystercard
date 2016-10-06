@@ -6,6 +6,7 @@ class Oystercard
 
   MAXIMUM_BALANCE = 90
   TRAVEL_COST = 1
+  PENALTY_FARE = 6
 
   def initialize(balance = 0, journey = Journey.new)
     @balance = balance
