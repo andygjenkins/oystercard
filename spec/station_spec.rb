@@ -2,17 +2,17 @@ require 'spec_helper'
 
 describe Station do
 
-  subject(:station) { described_class.new(:Waterloo, 4)}
+  subject(:station) { Station.new(name: "Waterloo", zone: 4) }
 
 
-  describe '#initizalization' do
+  describe '#initialization' do
 
     it 'is expected to have a name' do
-      expect(station.name).to be :Waterloo
+      expect(station.name).to eq "Waterloo"
     end
 
     it 'is expected to have a zone' do
-      expect(station.zone).to be 4
+      expect(station.zone).to eq 4
     end
   end
 end
