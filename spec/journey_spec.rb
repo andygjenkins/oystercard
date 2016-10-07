@@ -1,13 +1,26 @@
 require 'spec_helper'
 
 describe Journey do
-
-  let(:card) { Oystercard.new(10) }
+  
+  subject(:journey) { Journey.new }
   let(:station)  {   double(:station)  }
-  let(:exit_station) {double(:station, :exit_station => :nil) }
-  let(:journey){ {entry_station: station, exit_station: exit_station} }
+  
+  describe 'initizalization' do
+    
+    it 'knows if a journey is not complete' do
+      expect(journey).not_to be_complete    
+     end  
+
+    it 'has a penalty fare by default' do
+      expect(journey.fare).to eq Journey::PENALTY_FARE
+    end
+  end
+end
 
 
+
+
+=begin
   describe '#initizalization' do
     
     it 'should return nil if no arguments are passed to entry_station' do
@@ -32,4 +45,4 @@ describe Journey do
       expect(card.journey.in_journey?).to be true
     end
   end
-end
+=end

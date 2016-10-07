@@ -1,34 +1,17 @@
 class Journey
 
-  attr_reader :entry_station, :exit_station, :journeys, :journey_log
+  attr_reader :entry_station, :exit_station, :fare
+  
+  PENALTY_FARE = 6
 
   def initialize(entry_station = nil, exit_station = nil)
     @entry_station = entry_station
     @exit_station = exit_station
+    @complete = false
+    @fare = PENALTY_FARE
   end
-
-  def start(station)
-    @entry_station = station
-  end
-
-  def finish(station)
-    @exit_station = station
-  end
-
-  def in_journey?
-    @entry_station != nil ? true : false
-  end
-
-  def journey_incomplete?
-    @entry_station == nil || @exit_station == nil
-  end
-
-  def reset
-    @entry_station = nil
-    @exit_station = nil
-  end
-
-  def complete_journey
-      reset
+  
+  def complete?
+    @complete
   end
 end
